@@ -165,6 +165,12 @@ function meaningDistractors(entry, kind, group) {
 }
 
 function allQuestions(topic, opts) {
+  if (topic.kind === "mixed") {
+    // Mixed rounds always include both directions for numbers and meanings.
+    const mixedOpts = Object.assign({}, opts, { direction: "mixed" });
+    return TOPICS.filter(t => t.kind !== "mixed")
+      .flatMap(t => allQuestions(t, mixedOpts));
+  }
   if (topic.kind === "numbers") {
     const dirs = opts.direction === "mixed" ? ["f2n", "n2f"] : [opts.direction];
     const qs = [];
@@ -260,9 +266,16 @@ function recordResult(q, ok) {
   it.label = q.label;
   state.items[q.key] = it;
 
-  const st = state.stats[q.topic] || (state.stats[q.topic] = { asked: 0, correct: 0, rounds: 0, bestStreak: 0 });
-  st.asked += 1;
-  if (ok) st.correct += 1;
+  // Keep per-topic progress, plus an aggregate row for mixed practice.
+  const answeredTopics = [q.topic];
+  if (game && game.topic.kind === "mixed" && q.topic !== game.topic.id) {
+    answeredTopics.push(game.topic.id);
+  }
+  for (const topicId of answeredTopics) {
+    const st = state.stats[topicId] || (state.stats[topicId] = { asked: 0, correct: 0, rounds: 0, bestStreak: 0 });
+    st.asked += 1;
+    if (ok) st.correct += 1;
+  }
 
   Store.save(state);
 }
@@ -277,7 +290,7 @@ function renderHome() {
     const acc = pct(st.correct, st.asked);
     const card = document.createElement("button");
     card.type = "button";
-    card.className = "topic-card";
+    card.className = "topic-card" + (t.kind === "mixed" ? " mixed" : "");
     card.innerHTML =
       '<span class="topic-icon">' + t.icon + "</span>" +
       '<span class="topic-body"><strong>' + esc(t.name) + "</strong>" +
@@ -367,7 +380,9 @@ function renderQuestion() {
   const q = currentQ();
   game.answered = false;
 
-  $("#game-topic").textContent = game.topic.icon + " " + game.topic.name;
+  const sourceTopic = game.topic.kind === "mixed" ? topicById(q.topic) : null;
+  $("#game-topic").textContent = game.topic.icon + " " + game.topic.name +
+    (sourceTopic ? " · " + sourceTopic.icon + " " + sourceTopic.name : "");
   $("#game-count").textContent = (game.idx + 1) + " / " + game.deck.length;
   updateHud();
   $("#game-bar").style.width = (game.idx / game.deck.length * 100) + "%";

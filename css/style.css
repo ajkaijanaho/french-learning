@@ -162,6 +162,11 @@ h3 { font-size: 15px; margin: 22px 0 8px; color: #374151; }
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(43, 80, 226, .15);
 }
+.topic-card.mixed {
+  grid-column: 1 / -1;
+  border-color: #c7d2fe;
+  background: linear-gradient(135deg, #eef2ff, #fff);
+}
 .topic-card:focus-visible { outline: 3px solid rgba(43, 80, 226, .4); outline-offset: 2px; }
 
 .topic-icon { font-size: 26px; line-height: 1.2; }

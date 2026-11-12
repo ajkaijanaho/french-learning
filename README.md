@@ -17,6 +17,7 @@ python3 -m http.server 8000
 
 | Topic | What it drills |
 |---|---|
+| Mixed practice · all topics | Every task below shuffled together, including both answer directions |
 | Numbers 0–100 | French number words ↔ numerals, both directions (vingt, soixante-dix, quatre-vingts, quatre-vingt-un…) |
 | avoir / être / aller | Full present-tense conjugation of each irregular verb |
 | -er verbs (class I) | 14 regular first-group verbs incl. spelling-change cases (`nous mangeons`, `nous commençons`) |
@@ -27,6 +28,9 @@ python3 -m http.server 8000
 
 ## Features
 
+- **Mixed practice**: draw questions from every topic in one round, with mixed
+  directions and weak-spot selection across the full question pool. Progress is
+  still tracked for each underlying topic as well as for mixed rounds overall.
 - **Two answer modes**: multiple choice (4 options) or free typing.
   Typed answers are checked leniently: accents, apostrophes, hyphens and the
   filler word *et* are ignored (`"vingt et un"` = `"vingt-un"`, `"jai"` = `"j'ai"`).

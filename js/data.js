@@ -160,6 +160,12 @@ function enAccept(en) {
 
 const TOPICS = [
   {
+    id: "mixed", kind: "mixed",
+    name: "Mixed practice · all topics",
+    icon: "🎲",
+    desc: "A shuffled mix of every task: numbers, verb conjugations and meanings, in both directions.",
+  },
+  {
     id: "numbers", kind: "numbers",
     name: "Numbers 0–100",
     icon: "🔢",
