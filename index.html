@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>French Trainer — Numbers & Verbs</title>
+<meta name="description" content="A static, offline-friendly drill game for French numbers 0–100 and the present tense of avoir, être, aller, -er and -ir verbs. Progress is stored in your browser.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇫🇷</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <button class="brand" id="nav-home" type="button">
+      <span class="flag" aria-hidden="true">🇫🇷</span>
+      <span>
+        <strong>French Trainer</strong>
+        <small>numbers · verbs · present tense</small>
+      </span>
+    </button>
+    <nav class="nav">
+      <button class="btn ghost" id="nav-progress" type="button">📊 Progress</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ HOME ============ -->
+  <section id="screen-home" aria-labelledby="home-title">
+    <div class="hero card">
+      <h1 id="home-title">Drill your French, one card at a time.</h1>
+      <p>Pick a topic below. Answer by typing or multiple choice — your streaks, accuracy and
+         weak spots are saved in this browser (<code>localStorage</code>), no account needed.</p>
+    </div>
+    <div id="topic-grid" class="topic-grid"><!-- topic cards injected --></div>
+  </section>
+
+  <!-- ============ SETUP ============ -->
+  <section id="screen-setup" hidden aria-labelledby="setup-title">
+    <div class="card">
+      <button class="btn ghost back" id="setup-back" type="button">← All topics</button>
+      <h2 id="setup-title">Topic</h2>
+      <p id="setup-desc" class="muted"></p>
+
+      <div class="setup-group" id="group-direction">
+        <h3>Direction</h3>
+        <div class="seg" data-setting="direction">
+          <button type="button" data-val="mixed">Mixed</button>
+          <button type="button" data-val="f2n">French → number</button>
+          <button type="button" data-val="n2f">Number → French</button>
+        </div>
+      </div>
+
+      <div class="setup-group">
+        <h3>Answer mode</h3>
+        <div class="seg" data-setting="mode">
+          <button type="button" data-val="choice">Multiple choice · 4 options</button>
+          <button type="button" data-val="text">Free typing</button>
+        </div>
+      </div>
+
+      <div class="setup-group">
+        <h3>Questions per round</h3>
+        <div class="seg" data-setting="size">
+          <button type="button" data-val="5">5</button>
+          <button type="button" data-val="10">10</button>
+          <button type="button" data-val="20">20</button>
+          <button type="button" data-val="30">30</button>
+        </div>
+      </div>
+
+      <div class="setup-group">
+        <h3>Which questions?</h3>
+        <div class="seg" data-setting="focus">
+          <button type="button" data-val="all">Everything (random)</button>
+          <button type="button" data-val="weak">My weak spots</button>
+        </div>
+        <p class="muted small" id="focus-hint">“Weak spots” prioritises items you have answered wrong before.</p>
+      </div>
+
+      <button class="btn primary big" id="btn-start" type="button">Start round ▸</button>
+    </div>
+  </section>
+
+  <!-- ============ GAME ============ -->
+  <section id="screen-game" hidden aria-labelledby="game-topic">
+    <div class="game-top">
+      <div>
+        <div class="muted small" id="game-topic">Topic</div>
+        <div class="muted small"><span id="game-count">1 / 10</span></div>
+      </div>
+      <div class="game-score">
+        <span id="game-streak" class="chip streak" title="Current streak">🔥 0</span>
+        <span id="game-score" class="chip">★ 0</span>
+        <button class="btn ghost small" id="btn-abort" type="button" title="End the round now">✕ Abort</button>
+      </div>
+    </div>
+
+    <div class="bar" role="progressbar" aria-label="Round progress"><div class="fill" id="game-bar"></div></div>
+
+    <div class="card question-card" id="question-card">
+      <div class="prompt-row">
+        <div class="prompt" id="game-prompt">…</div>
+        <button class="btn ghost small speak" id="btn-speak" type="button" title="Listen (French)" hidden>🔊</button>
+      </div>
+
+      <div id="game-answer-area"><!-- input or options injected --></div>
+
+      <div class="feedback" id="game-feedback" aria-live="polite"></div>
+
+      <div class="game-actions">
+        <button class="btn primary" id="btn-next" type="button" hidden>Next ▸</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SUMMARY ============ -->
+  <section id="screen-summary" hidden aria-labelledby="summary-title">
+    <div class="card center">
+      <h2 id="summary-title">Round complete!</h2>
+      <div class="big-score" id="summary-score">0</div>
+      <div class="muted">points</div>
+      <div class="stat-grid" id="summary-stats"></div>
+      <div id="summary-missed-wrap" hidden>
+        <h3>Review these</h3>
+        <ul class="missed" id="summary-missed"></ul>
+      </div>
+      <div class="btn-row">
+        <button class="btn primary" id="btn-again" type="button">↻ Play again</button>
+        <button class="btn" id="btn-resetup" type="button">Change settings</button>
+        <button class="btn ghost" id="btn-summary-home" type="button">All topics</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROGRESS ============ -->
+  <section id="screen-progress" hidden aria-labelledby="progress-title">
+    <div class="card">
+      <button class="btn ghost back" id="progress-back" type="button">← All topics</button>
+      <h2 id="progress-title">Your progress</h2>
+      <p class="muted">Stored only in this browser. Nothing leaves your device.</p>
+
+      <h3>By topic</h3>
+      <div class="table-wrap">
+        <table class="stats" id="stats-table">
+          <thead>
+            <tr><th>Topic</th><th>Rounds</th><th>Questions</th><th>Correct</th><th>Accuracy</th><th>Best streak</th></tr>
+          </thead>
+          <tbody><!-- injected --></tbody>
+        </table>
+      </div>
+
+      <h3>Weakest items <span class="muted small">(answered at least 3 times)</span></h3>
+      <ul class="missed" id="weak-list"></ul>
+
+      <h3>Recent rounds</h3>
+      <ul class="missed" id="history-list"></ul>
+
+      <button class="btn danger" id="btn-reset-all" type="button">🗑 Erase all saved data</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Static site · no server · state kept in <code>localStorage</code>. Works offline once loaded.</p>
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/store.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

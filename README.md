@@ -1,0 +1,47 @@
+# 🇫🇷 French Trainer (static site)
+
+A zero-dependency, offline-friendly drill game for French. No backend — all state
+(stats, per-question mastery, settings, round history) is kept in the browser's
+`localStorage`.
+
+## Run it
+
+Open `index.html` directly in a browser, or serve the folder:
+
+```bash
+python3 -m http.server 8000
+# → http://localhost:8000
+```
+
+## Topics
+
+| Topic | What it drills |
+|---|---|
+| Numbers 0–100 | French number words ↔ numerals, both directions (vingt, soixante-dix, quatre-vingts, quatre-vingt-un…) |
+| avoir / être / aller | Full present-tense conjugation of each irregular verb |
+| -er verbs (class I) | 14 regular first-group verbs incl. spelling-change cases (`nous mangeons`, `nous commençons`) |
+| -ir verbs (class II) | 10 regular second-group verbs (finir pattern: `-is, -is, -it, -issons, -issez, -issent`) |
+
+## Features
+
+- **Two answer modes**: multiple choice (4 options) or free typing.
+  Typed answers are checked leniently: accents, apostrophes, hyphens and the
+  filler word *et* are ignored (`"vingt et un"` = `"vingt-un"`, `"jai"` = `"j'ai"`).
+- **Rounds** of 5/10/20/30 questions, random or focused on your *weak spots*
+  (items you've answered wrong before).
+- **Scoring**: 10 points per correct answer plus a streak bonus.
+- **Progress screen**: per-topic accuracy, best streaks, weakest items,
+  recent rounds, and an option to erase all saved data.
+- **🔊 button** on French→number questions reads the word aloud via the
+  browser's built-in speech synthesis (`fr-FR`), when available.
+- Keyboard friendly: `Enter` checks the answer / advances to the next card.
+
+## Files
+
+```
+index.html        page structure / screens
+css/style.css     styling
+js/data.js        content: numbers 0–100 generator, verb conjugations, topics
+js/store.js       localStorage persistence layer
+js/app.js         game logic + UI
+```
