@@ -75,14 +75,17 @@ const PRONOUNS = [
 const IRREGULAR_VERBS = {
   avoir: {
     label: "avoir",
+    en: "to have",
     forms: { je: "j'ai", tu: "as", il: "a", nous: "avons", vous: "avez", ils: "ont" },
   },
   etre: {
     label: "être",
+    en: "to be",
     forms: { je: "suis", tu: "es", il: "est", nous: "sommes", vous: "êtes", ils: "sont" },
   },
   aller: {
     label: "aller",
+    en: "to go",
     forms: { je: "vais", tu: "vas", il: "va", nous: "allons", vous: "allez", ils: "vont" },
   },
 };
@@ -92,36 +95,66 @@ const IRREGULAR_VERBS = {
  * (manger → nous mangeons, commencer → nous commençons) are correct. */
 
 const ER_VERBS = [
-  { inf: "parler",    forms: { je: "parle",     tu: "parles",     il: "parle",     nous: "parlons",    vous: "parlez",    ils: "parlent" } },
-  { inf: "aimer",     forms: { je: "aime",      tu: "aimes",      il: "aime",      nous: "aimons",     vous: "aimez",     ils: "aiment" } },
-  { inf: "regarder",  forms: { je: "regarde",   tu: "regardes",   il: "regarde",   nous: "regardons",  vous: "regardez",   ils: "regardent" } },
-  { inf: "écouter",   forms: { je: "écoute",    tu: "écoutes",    il: "écoute",    nous: "écoutons",   vous: "écoutez",    ils: "écoutent" } },
-  { inf: "travailler",forms: { je: "travaille", tu: "travailles", il: "travaille", nous: "travaillons",vous: "travaillez", ils: "travaillent" } },
-  { inf: "habiter",   forms: { je: "habite",    tu: "habites",    il: "habite",    nous: "habitons",   vous: "habitez",    ils: "habitent" } },
-  { inf: "chanter",   forms: { je: "chante",    tu: "chantes",    il: "chante",    nous: "chantons",   vous: "chantez",    ils: "chantent" } },
-  { inf: "danser",    forms: { je: "danse",     tu: "danses",     il: "danse",     nous: "dansons",    vous: "dansez",     ils: "dansent" } },
-  { inf: "chercher",  forms: { je: "cherche",   tu: "cherches",   il: "cherche",   nous: "cherchons",  vous: "cherchez",   ils: "cherchent" } },
-  { inf: "trouver",   forms: { je: "trouve",    tu: "trouves",    il: "trouve",    nous: "trouvons",   vous: "trouvez",    ils: "trouvent" } },
-  { inf: "jouer",     forms: { je: "joue",      tu: "joues",      il: "joue",      nous: "jouons",     vous: "jouez",      ils: "jouent" } },
-  { inf: "donner",    forms: { je: "donne",     tu: "donnes",     il: "donne",     nous: "donnons",    vous: "donnez",     ils: "donnent" } },
-  { inf: "manger",    forms: { je: "mange",     tu: "manges",     il: "mange",     nous: "mangeons",   vous: "mangez",     ils: "mangent" } },
-  { inf: "commencer", forms: { je: "commence",  tu: "commences",  il: "commence",  nous: "commençons", vous: "commencez",  ils: "commencent" } },
+  { inf: "parler",    en: "to speak / to talk",     forms: { je: "parle",     tu: "parles",     il: "parle",     nous: "parlons",    vous: "parlez",    ils: "parlent" } },
+  { inf: "aimer",     en: "to love / to like",       forms: { je: "aime",      tu: "aimes",      il: "aime",      nous: "aimons",     vous: "aimez",     ils: "aiment" } },
+  { inf: "regarder",  en: "to look at / to watch",    forms: { je: "regarde",   tu: "regardes",   il: "regarde",   nous: "regardons",  vous: "regardez",   ils: "regardent" } },
+  { inf: "écouter",   en: "to listen to",             forms: { je: "écoute",    tu: "écoutes",    il: "écoute",    nous: "écoutons",   vous: "écoutez",    ils: "écoutent" } },
+  { inf: "travailler",en: "to work",                  forms: { je: "travaille", tu: "travailles", il: "travaille", nous: "travaillons",vous: "travaillez", ils: "travaillent" } },
+  { inf: "habiter",   en: "to live (somewhere)",      forms: { je: "habite",    tu: "habites",    il: "habite",    nous: "habitons",   vous: "habitez",    ils: "habitent" } },
+  { inf: "chanter",   en: "to sing",                  forms: { je: "chante",    tu: "chantes",    il: "chante",    nous: "chantons",   vous: "chantez",    ils: "chantent" } },
+  { inf: "danser",    en: "to dance",                 forms: { je: "danse",     tu: "danses",     il: "danse",     nous: "dansons",    vous: "dansez",     ils: "dansent" } },
+  { inf: "chercher",  en: "to look for / to search",  forms: { je: "cherche",   tu: "cherches",   il: "cherche",   nous: "cherchons",  vous: "cherchez",   ils: "cherchent" } },
+  { inf: "trouver",   en: "to find",                  forms: { je: "trouve",    tu: "trouves",    il: "trouve",    nous: "trouvons",   vous: "trouvez",    ils: "trouvent" } },
+  { inf: "jouer",     en: "to play",                  forms: { je: "joue",      tu: "joues",      il: "joue",      nous: "jouons",     vous: "jouez",      ils: "jouent" } },
+  { inf: "donner",    en: "to give",                  forms: { je: "donne",     tu: "donnes",     il: "donne",     nous: "donnons",    vous: "donnez",     ils: "donnent" } },
+  { inf: "manger",    en: "to eat",                   forms: { je: "mange",     tu: "manges",     il: "mange",     nous: "mangeons",   vous: "mangez",     ils: "mangent" } },
+  { inf: "commencer", en: "to begin / to start",      forms: { je: "commence",  tu: "commences",  il: "commence",  nous: "commençons", vous: "commencez",  ils: "commencent" } },
 ];
 
 /* ---------- Regular -ir verbs (class II, finir pattern) ---------- */
 
 const IR_VERBS = [
-  { inf: "finir",     forms: { je: "finis",     tu: "finis",     il: "finit",     nous: "finissons",    vous: "finissez",    ils: "finissent" } },
-  { inf: "choisir",   forms: { je: "choisis",   tu: "choisis",   il: "choisit",   nous: "choisissons",  vous: "choisissez",  ils: "choisissent" } },
-  { inf: "réussir",   forms: { je: "réussis",   tu: "réussis",   il: "réussit",   nous: "réussissons",  vous: "réussissez",  ils: "réussissent" } },
-  { inf: "réfléchir", forms: { je: "réfléchis", tu: "réfléchis", il: "réfléchit", nous: "réfléchissons",vous: "réfléchissez", ils: "réfléchissent" } },
-  { inf: "grandir",   forms: { je: "grandis",   tu: "grandis",   il: "grandit",   nous: "grandissons",  vous: "grandissez",  ils: "grandissent" } },
-  { inf: "agir",      forms: { je: "agis",      tu: "agis",      il: "agit",      nous: "agissons",    vous: "agissez",     ils: "agissent" } },
-  { inf: "remplir",   forms: { je: "remplis",   tu: "remplis",   il: "remplit",   nous: "remplissons",  vous: "remplissez",  ils: "remplissent" } },
-  { inf: "obéir",     forms: { je: "obéis",     tu: "obéis",     il: "obéit",     nous: "obéissons",   vous: "obéissez",    ils: "obéissent" } },
-  { inf: "rougir",    forms: { je: "rougis",    tu: "rougis",    il: "rougit",    nous: "rougissons",   vous: "rougissez",   ils: "rougissent" } },
-  { inf: "établir",   forms: { je: "établis",   tu: "établis",   il: "établit",   nous: "établissons",  vous: "établissez",  ils: "établissent" } },
+  { inf: "finir",     en: "to finish / to end",   forms: { je: "finis",     tu: "finis",     il: "finit",     nous: "finissons",    vous: "finissez",    ils: "finissent" } },
+  { inf: "choisir",   en: "to choose",            forms: { je: "choisis",   tu: "choisis",   il: "choisit",   nous: "choisissons",  vous: "choisissez",  ils: "choisissent" } },
+  { inf: "réussir",   en: "to succeed",           forms: { je: "réussis",   tu: "réussis",   il: "réussit",   nous: "réussissons",  vous: "réussissez",  ils: "réussissent" } },
+  { inf: "réfléchir", en: "to think / to reflect", forms: { je: "réfléchis", tu: "réfléchis", il: "réfléchit", nous: "réfléchissons",vous: "réfléchissez", ils: "réfléchissent" } },
+  { inf: "grandir",   en: "to grow (up)",         forms: { je: "grandis",   tu: "grandis",   il: "grandit",   nous: "grandissons",  vous: "grandissez",  ils: "grandissent" } },
+  { inf: "agir",      en: "to act",               forms: { je: "agis",      tu: "agis",      il: "agit",      nous: "agissons",    vous: "agissez",     ils: "agissent" } },
+  { inf: "remplir",   en: "to fill (in)",         forms: { je: "remplis",   tu: "remplis",   il: "remplit",   nous: "remplissons",  vous: "remplissez",  ils: "remplissent" } },
+  { inf: "obéir",     en: "to obey",              forms: { je: "obéis",     tu: "obéis",     il: "obéit",     nous: "obéissons",   vous: "obéissez",    ils: "obéissent" } },
+  { inf: "rougir",    en: "to blush",             forms: { je: "rougis",    tu: "rougis",    il: "rougit",    nous: "rougissons",   vous: "rougissez",   ils: "rougissent" } },
+  { inf: "établir",   en: "to establish",         forms: { je: "établis",   tu: "établis",   il: "établit",   nous: "établissons",  vous: "établissez",  ils: "établissent" } },
 ];
+
+/* ---------- Verb meanings ---------- */
+
+/** Every verb as { inf, en } — display infinitive + English meaning. */
+function allVerbEntries() {
+  return Object.values(IRREGULAR_VERBS).map(v => ({ inf: v.label, en: v.en }))
+    .concat(ER_VERBS.map(v => ({ inf: v.inf, en: v.en })))
+    .concat(IR_VERBS.map(v => ({ inf: v.inf, en: v.en })));
+}
+
+/** Verbs of one meaning-topic group: "irregular" | "er" | "ir". */
+function meaningPool(group) {
+  if (group === "er") return ER_VERBS.map(v => ({ inf: v.inf, en: v.en }));
+  if (group === "ir") return IR_VERBS.map(v => ({ inf: v.inf, en: v.en }));
+  return Object.values(IRREGULAR_VERBS).map(v => ({ inf: v.label, en: v.en }));
+}
+
+/** Accepted typed answers for an English meaning.
+ * "to speak / talk" → "to speak", "speak", "talk"…; "(somewhere)"-style
+ * clarifiers are ignored, so "to live (somewhere)" also accepts "to live". */
+function enAccept(en) {
+  const stripped = en.replace(/\([^)]*\)/g, " ");
+  const parts = en.split("/").concat(stripped.split("/")).map(s => s.trim()).filter(Boolean);
+  const out = new Set();
+  for (const p of parts) {
+    out.add(norm(p));
+    if (/^to\s+/i.test(p)) out.add(norm(p.replace(/^to\s+/i, "")));
+  }
+  return [...out];
+}
 
 /* ---------- Topics ---------- */
 
@@ -161,6 +194,24 @@ const TOPICS = [
     name: "-ir verbs · class II",
     icon: "🅱️",
     desc: "Regular second-group verbs (finir pattern): finir, choisir, réussir… (-is, -is, -it, -issons, -issez, -issent).",
+  },
+  {
+    id: "meaning-irreg", kind: "meaning", group: "irregular",
+    name: "Verb meanings · irregular",
+    icon: "🧠",
+    desc: "What do avoir, être and aller mean? French ⇄ English, both directions.",
+  },
+  {
+    id: "meaning-er", kind: "meaning", group: "er",
+    name: "Verb meanings · -er verbs",
+    icon: "📖",
+    desc: "Meanings of the 14 first-group verbs — parler, aimer, manger… French ⇄ English.",
+  },
+  {
+    id: "meaning-ir", kind: "meaning", group: "ir",
+    name: "Verb meanings · -ir verbs",
+    icon: "📕",
+    desc: "Meanings of the 10 second-group verbs — finir, choisir, réussir… French ⇄ English.",
   },
 ];
 

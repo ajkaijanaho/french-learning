@@ -120,6 +120,50 @@ function makeVerbQuestion(verbId, p, topicId, cls) {
   };
 }
 
+function makeMeaningQuestion(entry, direction, topicId, group) {
+  const key = "mean:" + entry.inf + ":" + direction;
+  if (direction === "f2e") {
+    return {
+      topic: topicId, kind: "meaning-f2e", key,
+      promptHTML: '<span class="word">' + esc(entry.inf) + "</span>",
+      promptText: entry.inf, promptIsFrench: true,
+      answer: entry.en, answerLabel: entry.en,
+      accept: enAccept(entry.en),
+      others: meaningDistractors(entry, "f2e", group),
+      label: entry.inf + " = " + entry.en,
+      placeholder: "type the English meaning…",
+    };
+  }
+  return {
+    topic: topicId, kind: "meaning-e2f", key,
+    promptHTML: '<span class="english">' + esc(entry.en) + "</span>",
+    promptText: entry.en, promptIsFrench: false,
+    answer: entry.inf, answerLabel: entry.inf,
+    accept: [norm(entry.inf), norm("to " + entry.inf)],
+    others: meaningDistractors(entry, "e2f", group),
+    label: entry.en + " = " + entry.inf,
+    placeholder: "type the French verb…",
+  };
+}
+
+/** Up to 3 distractor options for a meaning question: confusable verbs from the
+ * same group first, then topped up from all verbs (the irregular group has only 3). */
+function meaningDistractors(entry, kind, group) {
+  const field = kind === "f2e" ? "en" : "inf";
+  const seen = new Set([norm(entry.en), norm(entry.inf)]);
+  const out = [];
+  const pick = (list) => {
+    for (const e of shuffle(list)) {
+      if (out.length >= 3) return;
+      const k = norm(e[field]);
+      if (!seen.has(k)) { seen.add(k); out.push(e[field]); }
+    }
+  };
+  pick(meaningPool(group).filter(e => e.inf !== entry.inf));
+  pick(allVerbEntries().filter(e => e.inf !== entry.inf));
+  return out;
+}
+
 function allQuestions(topic, opts) {
   if (topic.kind === "numbers") {
     const dirs = opts.direction === "mixed" ? ["f2n", "n2f"] : [opts.direction];
@@ -134,6 +178,13 @@ function allQuestions(topic, opts) {
     const list = topic.cls === "er" ? ER_VERBS : IR_VERBS;
     const qs = [];
     for (const v of list) for (const p of PRONOUNS) qs.push(makeVerbQuestion(v.inf, p, topic.id, topic.cls));
+    return qs;
+  }
+  if (topic.kind === "meaning") {
+    const pool = meaningPool(topic.group);
+    const dirs = opts.direction === "mixed" ? ["f2e", "e2f"] : [opts.direction];
+    const qs = [];
+    for (const e of pool) for (const d of dirs) qs.push(makeMeaningQuestion(e, d, topic.id, topic.group));
     return qs;
   }
   return [];
@@ -167,6 +218,8 @@ function addChoiceOptions(q) {
     distractors = numberDistractors(q.n, 3).map(d => ({ label: String(d), value: String(d) }));
   } else if (q.kind === "number-n2f") {
     distractors = numberDistractors(q.n, 3).map(d => ({ label: frenchNumber(d), value: frenchNumber(d) }));
+  } else if (q.kind === "meaning-f2e" || q.kind === "meaning-e2f") {
+    distractors = q.others.slice(0, 3).map(v => ({ label: v, value: v }));
   } else { // verb / class
     distractors = shuffle(q.otherForms).slice(0, 3).map(f => ({ label: f, value: f }));
   }
@@ -247,7 +300,19 @@ function openSetup(topicId) {
 
   $("#setup-title").textContent = currentTopic.icon + "  " + currentTopic.name;
   $("#setup-desc").textContent = currentTopic.desc;
-  $("#group-direction").style.display = currentTopic.kind === "numbers" ? "" : "none";
+
+  // Direction only applies to numbers and verb meanings; label the buttons per kind.
+  const hasDirection = currentTopic.kind === "numbers" || currentTopic.kind === "meaning";
+  $("#group-direction").style.display = hasDirection ? "" : "none";
+  if (hasDirection) {
+    $("#seg-direction").innerHTML = currentTopic.kind === "meaning"
+      ? '<button type="button" data-val="mixed">Mixed</button>' +
+        '<button type="button" data-val="f2e">French → English</button>' +
+        '<button type="button" data-val="e2f">English → French</button>'
+      : '<button type="button" data-val="mixed">Mixed</button>' +
+        '<button type="button" data-val="f2n">French → number</button>' +
+        '<button type="button" data-val="n2f">Number → French</button>';
+  }
 
   syncSeg("mode", s.mode);
   syncSeg("direction", s.direction);
@@ -342,7 +407,7 @@ function renderQuestion() {
     input.autocapitalize = "off";
     input.spellcheck = false;
     input.id = "game-input";
-    input.placeholder = q.kind === "number-f2n" ? "type the number…" : "type the French form…";
+    input.placeholder = q.placeholder || (q.kind === "number-f2n" ? "type the number…" : "type the French form…");
     if (q.kind === "number-f2n") input.setAttribute("inputmode", "numeric");
     input.setAttribute("aria-label", "Your answer");
     const btn = document.createElement("button");

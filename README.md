@@ -21,12 +21,17 @@ python3 -m http.server 8000
 | avoir / être / aller | Full present-tense conjugation of each irregular verb |
 | -er verbs (class I) | 14 regular first-group verbs incl. spelling-change cases (`nous mangeons`, `nous commençons`) |
 | -ir verbs (class II) | 10 regular second-group verbs (finir pattern: `-is, -is, -it, -issons, -issez, -issent`) |
+| Verb meanings · irregular | English meanings of avoir / être / aller, French ⇄ English |
+| Verb meanings · -er verbs | English meanings of the 14 class-I verbs, French ⇄ English |
+| Verb meanings · -ir verbs | English meanings of the 10 class-II verbs, French ⇄ English |
 
 ## Features
 
 - **Two answer modes**: multiple choice (4 options) or free typing.
   Typed answers are checked leniently: accents, apostrophes, hyphens and the
   filler word *et* are ignored (`"vingt et un"` = `"vingt-un"`, `"jai"` = `"j'ai"`).
+  Verb-meaning answers accept synonyms and an optional leading *to*
+  (`"to speak"`, `"speak"`, `"talk"` all count for *parler*).
 - **Rounds** of 5/10/20/30 questions, random or focused on your *weak spots*
   (items you've answered wrong before).
 - **Scoring**: 10 points per correct answer plus a streak bonus.

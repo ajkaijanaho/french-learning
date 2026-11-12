@@ -245,6 +245,7 @@ h3 { font-size: 15px; margin: 22px 0 8px; color: #374151; }
 .prompt-row { display: flex; align-items: center; gap: 10px; }
 .prompt { flex: 1; font-size: 34px; font-weight: 700; letter-spacing: .5px; }
 .prompt .word { color: var(--blue-dark); }
+.prompt .english { color: #7c3aed; }
 .prompt .numeral { font-variant-numeric: tabular-nums; }
 .prompt .pronoun { color: var(--muted); font-size: 22px; font-weight: 600; }
 
