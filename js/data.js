@@ -70,7 +70,7 @@ const PRONOUNS = [
   { key: "ils",  label: "ils / elles" },
 ];
 
-/* ---------- Irregular verbs: avoir, être, aller ---------- */
+/* ---------- Irregular verbs: avoir, être, aller, prendre ---------- */
 
 const IRREGULAR_VERBS = {
   avoir: {
@@ -87,6 +87,11 @@ const IRREGULAR_VERBS = {
     label: "aller",
     en: "to go",
     forms: { je: "vais", tu: "vas", il: "va", nous: "allons", vous: "allez", ils: "vont" },
+  },
+  prendre: {
+    label: "prendre",
+    en: "to take",
+    forms: { je: "prends", tu: "prends", il: "prend", nous: "prenons", vous: "prenez", ils: "prennent" },
   },
 };
 
@@ -190,6 +195,12 @@ const TOPICS = [
     desc: "je vais, tu vas, il va, nous allons, vous allez, ils vont.",
   },
   {
+    id: "prendre", kind: "verb", verb: "prendre",
+    name: "prendre — present tense",
+    icon: "🤲",
+    desc: "je prends, tu prends, il prend, nous prenons, vous prenez, ils prennent.",
+  },
+  {
     id: "er", kind: "class", cls: "er",
     name: "-er verbs · class I",
     icon: "🅰️",
@@ -205,7 +216,7 @@ const TOPICS = [
     id: "meaning-irreg", kind: "meaning", group: "irregular",
     name: "Verb meanings · irregular",
     icon: "🧠",
-    desc: "What do avoir, être and aller mean? French ⇄ English, both directions.",
+    desc: "What do avoir, être, aller and prendre mean? French ⇄ English, both directions.",
   },
   {
     id: "meaning-er", kind: "meaning", group: "er",

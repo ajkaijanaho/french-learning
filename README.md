@@ -19,10 +19,10 @@ python3 -m http.server 8000
 |---|---|
 | Mixed practice · all topics | Every task below shuffled together, including both answer directions |
 | Numbers 0–100 | French number words ↔ numerals, both directions (vingt, soixante-dix, quatre-vingts, quatre-vingt-un…) |
-| avoir / être / aller | Full present-tense conjugation of each irregular verb |
+| avoir / être / aller / prendre | Full present-tense conjugation of each irregular verb |
 | -er verbs (class I) | 14 regular first-group verbs incl. spelling-change cases (`nous mangeons`, `nous commençons`) |
 | -ir verbs (class II) | 10 regular second-group verbs (finir pattern: `-is, -is, -it, -issons, -issez, -issent`) |
-| Verb meanings · irregular | English meanings of avoir / être / aller, French ⇄ English |
+| Verb meanings · irregular | English meanings of avoir / être / aller / prendre, French ⇄ English |
 | Verb meanings · -er verbs | English meanings of the 14 class-I verbs, French ⇄ English |
 | Verb meanings · -ir verbs | English meanings of the 10 class-II verbs, French ⇄ English |
 
@@ -66,6 +66,7 @@ described by commit message:
 - **Initial version** — **Mistral Large 4**
 - **Add verb meaning quizzes (French ⇄ English)** — **Mistral Large 4**
 - **Add mixed practice mode across all topics** — **Kimi K3.1 Pro**
+- **Add the irregular verb prendre (present tense + meaning quizzes)** — **Mistral Large 4**
 - Later documentation/licensing commits may have been made by other agents.
 
 Given the minimal human involvement, the author considers this work to be
